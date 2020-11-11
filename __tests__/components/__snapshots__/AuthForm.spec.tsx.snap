@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthForm.tsx matches snapshot 1`] = `
+Array [
+  <View
+    style={
+      Object {
+        "marginBottom": 60,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "marginVertical": 20,
+          "maxHeight": 80,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "marginVertical": 5,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          Email
+        </Text>
+      </View>
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="none"
+        editable={true}
+        keyboardType="email-address"
+        onBlur={[Function]}
+        onChangeText={[Function]}
+        placeholder="Digite seu email"
+        placeholderTextColor="#898989"
+        rejectResponderTermination={true}
+        style={
+          Object {
+            "borderBottomColor": "#000",
+            "borderBottomWidth": 1,
+            "paddingVertical": 5,
+          }
+        }
+        textContentType="username"
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "marginVertical": 20,
+          "maxHeight": 80,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "marginVertical": 5,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+            }
+          }
+        >
+          Senha
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#232323",
+              "fontSize": 12,
+            }
+          }
+        >
+          Sua senha deve conter pelo menos uma letra maiúscula e minúscula, um número e oito caracteres
+        </Text>
+      </View>
+      <TextInput
+        allowFontScaling={true}
+        editable={true}
+        onBlur={[Function]}
+        onChangeText={[Function]}
+        passwordRules="required: lower; required: upper; required: digit; required: [-]; minlength: 6;"
+        placeholder="Insira sua senha"
+        placeholderTextColor="#898989"
+        rejectResponderTermination={true}
+        secureTextEntry={true}
+        style={
+          Object {
+            "borderBottomColor": "#000",
+            "borderBottomWidth": 1,
+            "paddingVertical": 5,
+          }
+        }
+        textContentType="password"
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+  </View>,
+  <View
+    style={Object {}}
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#ea94a5",
+          "borderRadius": 50,
+          "height": 50,
+          "opacity": 1,
+          "padding": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontWeight": "bold",
+            "textAlign": "center",
+          }
+        }
+      >
+        Título do botão
+      </Text>
+    </View>
+  </View>,
+]
+`;
