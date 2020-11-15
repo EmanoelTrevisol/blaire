@@ -8,9 +8,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import { FormActionTypes, ActionTypes } from '../store/auth/form/types';
-import { formReducer } from '../store/auth/form/reducer';
-import initialFormState from '../store/auth/form/state';
+import { FormActionTypes, ActionTypes } from '../store/form/types';
+import { formReducer } from '../store/form/reducer';
+import initialFormState from '../store/form/state';
 
 import FormErrors from './FormErrors';
 
