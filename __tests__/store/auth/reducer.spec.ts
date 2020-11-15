@@ -26,7 +26,7 @@ describe('auth reducer', () => {
 
   test('action CLEAR_USER_INFO', () => {
     const action = {
-      type: ActionTypes.SET_USER_INFO,
+      type: ActionTypes.CLEAR_USER_INFO,
     };
 
     expect(reducer(state, action)).toStrictEqual(initialState);
