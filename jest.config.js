@@ -8,8 +8,10 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@store/(.*)$': '<rootDir>/src/store/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
+    '^@containers/(.*)$': '<rootDir>/src/containers/$1',
     '^@validations/(.*)$': '<rootDir>/src/validations/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@models/(.*)$': '<rootDir>/src/models/$1',
   },
   setupFiles: ['<rootDir>/setupTests.ts'],
 };
