@@ -1,12 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  Button,
-} from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import AuthRoutes from './Auth';
 import Auth from '../utils/firebase/Auth';
 import HomeRoutes from './Home';
@@ -32,7 +26,9 @@ class Routes extends React.Component {
   }
 
   render() {
-    if (this.props.loading) {
+    const { loading, user } = this.props;
+
+    if (loading) {
       return (
         <View style={styles.center}>
           <ActivityIndicator size="large" color="#000" />
@@ -40,7 +36,7 @@ class Routes extends React.Component {
       );
     }
 
-    if (!this.props.user || !this.props.user.email) {
+    if (!user || !user.email) {
       return <AuthRoutes />;
     }
 
