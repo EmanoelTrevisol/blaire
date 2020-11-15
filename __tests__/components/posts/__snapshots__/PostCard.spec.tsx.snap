@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostCard.tsx matches snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "borderRadius": 20,
+      "elevation": 10,
+      "marginBottom": 15,
+      "marginHorizontal": 15,
+      "paddingVertical": 10,
+      "shadowColor": "#000",
+      "shadowOffset": Object {
+        "height": 4,
+        "width": 0,
+      },
+      "shadowOpacity": 0.2,
+      "shadowRadius": 3,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "borderBottomColor": "#DADADA",
+        "borderBottomWidth": 1,
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 15,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "maxWidth": "60%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginBottom": 3,
+          }
+        }
+      >
+        Título de exemplo
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#444",
+            "fontSize": 12,
+          }
+        }
+      >
+        1605399247782
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginLeft": 10,
+          "maxWidth": "35%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "flex": 1,
+            "flexWrap": "wrap",
+            "textAlign": "center",
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 15,
+      }
+    }
+  >
+    <Text>
+      Esse é o post. É pequeno pq é só um exemplo
+    </Text>
+  </View>
+</View>
+`;
