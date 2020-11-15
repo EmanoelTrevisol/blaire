@@ -19,6 +19,7 @@
     "@react-navigation/bottom-tabs": "^5.10.7",
     "@react-navigation/native": "^5.8.6",
     "@react-navigation/stack": "^5.12.3",
+    "axios": "^0.21.0",
     "flush-promises": "^1.0.2",
     "jest-circus": "^26.6.2",
     "lodash": "^4.17.20",
