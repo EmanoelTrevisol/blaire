@@ -1,12 +1,12 @@
 import { ActionTypes } from './types';
 import { setPostsLoading } from '../loader/actions';
-import Firestore from '../../utils/firebase/Firestore';
 
-const PostsStore = new Firestore('posts');
+import PostStore, { Post } from '../../models/Post';
+
+const postsStore = new PostStore();
 
 // TODO: add posts type
-export function setPostsList(posts: any[]) {
-  console.log('ON NORMAL SET ACTION');
+export function setPostsList(posts: Post[]) {
   return {
     type: ActionTypes.SET_POSTS_LIST,
     payload: {
@@ -25,7 +25,7 @@ export function setDetailPost(postId: string) {
   };
 }
 
-export function updatePost(postId: string, newData: any) {
+export function updatePost(postId: string, newData: Partial<Post>) {
   return {
     type: ActionTypes.UPDATE_POST,
     payload: {
@@ -44,14 +44,25 @@ export function deletePost(postId: string) {
   };
 }
 
+export function getPostsByFilter(filter: string) {
+  return async (dispatch) => {
+    try {
+      const posts = await postsStore.getListByFilter(filter);
+
+      dispatch(setPostsList(posts));
+    } catch (error) {
+      console.log('Error getting post list by filter', error);
+    }
+  };
+}
+
 export function getPostsList() {
   return async (dispatch) => {
     try {
-      console.log('GETTING POST LIST');
       dispatch(setPostsLoading(true));
 
-      const posts = await PostsStore.getList();
-      console.log('ON ASYNC ACTION');
+      const posts = await postsStore.getList();
+      // TODO: Fix posts type problem
       dispatch(setPostsList(posts));
     } catch (error) {
       console.log('Error getting post list', error);
