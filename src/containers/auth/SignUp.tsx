@@ -9,9 +9,9 @@ import {
   Platform,
 } from 'react-native';
 
-import AuthForm from '../../components/AuthForm';
-import Auth from '../../utils/firebase/Auth';
-import { onSignUp } from '../../utils/Toaster';
+import AuthForm from '@components/auth/AuthForm';
+import Auth from '@utils/firebase/Auth';
+import { onSignUp } from '@utils/Toaster';
 
 const SignIn = () => {
   const navigation = useNavigation();
