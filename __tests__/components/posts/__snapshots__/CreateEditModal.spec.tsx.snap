@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostCard.tsx matches snapshot 1`] = `
+<Modal
+  hardwareAccelerated={false}
+  visible={true}
+>
+  <View>
+    <Text>
+      Modal
+    </Text>
+  </View>
+</Modal>
+`;

@@ -4,43 +4,46 @@ import { StyleSheet, View, Text } from 'react-native';
 export interface IFormErrorProps {
   messages: {
     required: string;
-    valid: string;
+    valid?: string;
+    minLength?: string;
+    maxLength?: string;
   };
   error: boolean;
   errors: {
-    valid: boolean;
     required: boolean;
+    valid?: boolean;
+    minLength?: boolean;
+    maxLength?: boolean;
   };
   dirty: boolean;
 }
 
 const FormErrors = (props: IFormErrorProps) => {
-  const {
-    error,
-    dirty,
-    messages,
-    errors: { required, valid },
-  } = props;
+  const { error, dirty, messages, errors } = props;
+
   if (!error || !dirty) {
     return null;
   }
 
-  return (
-    <View style={stl.errors}>
-      {(required && (
-        <Text style={stl.inputErrorText} testID="required-error">
-          {messages.required}
-        </Text>
-      )) ||
-        null}
-      {(valid && (
-        <Text style={stl.inputErrorText} testID="valid-error">
-          {messages.valid}
-        </Text>
-      )) ||
-        null}
-    </View>
-  );
+  const errorMessage = () => {
+    let comp: JSX.Element | null = null;
+
+    for (const [key, value] of Object.entries(errors)) {
+      if (value) {
+        comp = (
+          <Text style={stl.inputErrorText} testID={`${key}-error`}>
+            {messages[key]}
+          </Text>
+        );
+
+        break;
+      }
+    }
+
+    return comp;
+  };
+
+  return <View style={stl.errors}>{errorMessage()}</View>;
 };
 
 const stl = StyleSheet.create({

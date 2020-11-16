@@ -19,12 +19,16 @@ describe('FormErrors.tsx', () => {
       messages: {
         required: 'Obrigatório',
         valid: 'Inválido',
+        minLength: 'Tem que ser maior',
+        maxLength: 'Tem que ser menor',
       },
       dirty: true,
       error: true,
       errors: {
         valid: true,
         required: true,
+        minLength: true,
+        maxLength: true,
       },
     };
   });
@@ -35,50 +39,122 @@ describe('FormErrors.tsx', () => {
     expect(comp.toJSON()).toMatchSnapshot();
   });
 
-  test('shows required and valid error', () => {
-    const { root } = render(props);
-    const errors = root.findAllByType(Text);
+  describe('show error', () => {
+    test('required', () => {
+      props.errors.valid = false;
+      props.errors.minLength = false;
+      props.errors.maxLength = false;
 
-    expect(errors.length).toBe(2);
+      const { root } = render(props);
+      const errors = root.findAllByType(Text);
 
-    expect(errors[0].props.children).toBe(props.messages.required);
-    expect(errors[1].props.children).toBe(props.messages.valid);
+      expect(errors.length).toBe(1);
+
+      expect(errors[0].props.children).toBe(props.messages.required);
+    });
+    test('valid', () => {
+      props.errors.required = false;
+      props.errors.minLength = false;
+      props.errors.maxLength = false;
+
+      const { root } = render(props);
+      const errors = root.findAllByType(Text);
+
+      expect(errors.length).toBe(1);
+
+      expect(errors[0].props.children).toBe(props.messages.valid);
+    });
+    test('minLength', () => {
+      props.errors.required = false;
+      props.errors.valid = false;
+      props.errors.maxLength = false;
+
+      const { root } = render(props);
+      const errors = root.findAllByType(Text);
+
+      expect(errors.length).toBe(1);
+
+      expect(errors[0].props.children).toBe(props.messages.minLength);
+    });
+    test('maxLength', () => {
+      props.errors.valid = false;
+      props.errors.required = false;
+      props.errors.minLength = false;
+
+      const { root } = render(props);
+      const errors = root.findAllByType(Text);
+
+      expect(errors.length).toBe(1);
+
+      expect(errors[0].props.children).toBe(props.messages.maxLength);
+    });
   });
 
-  test('hides required error when updated', () => {
-    const newProps = { ...props, errors: { ...props.errors } };
+  describe('hides error message', () => {
+    test('when required error is updated', () => {
+      const newProps = { ...props, errors: { ...props.errors } };
 
-    newProps.errors.required = false;
+      newProps.errors.required = false;
 
-    const { root, comp } = render(props);
-    const errors = root.findAllByType(Text);
+      const { root, comp } = render(props);
+      const errors = root.findAllByType(Text);
 
-    expect(errors.length).toBe(2);
+      comp.update(<FormErrors {...newProps} />);
 
-    comp.update(<FormErrors {...newProps} />);
+      const newErrors = root.findAllByType(Text);
 
-    const newErrors = root.findAllByType(Text);
-    expect(newErrors.length).toBe(1);
+      expect(errors.length).toBe(1);
+      expect(newErrors.length).toBe(1);
+      expect(newErrors[0].props.children).not.toBe(props.messages.required);
+    });
 
-    expect(newErrors[0].props.children).not.toBe(props.messages.required);
-  });
+    test('when valid error is updated', () => {
+      const newProps = { ...props, errors: { ...props.errors } };
 
-  test('hides valid error when updated', () => {
-    const newProps = { ...props, errors: { ...props.errors } };
+      newProps.errors.valid = false;
 
-    newProps.errors.valid = false;
+      const { root, comp } = render(props);
+      const errors = root.findAllByType(Text);
 
-    const { root, comp } = render(props);
-    const errors = root.findAllByType(Text);
+      comp.update(<FormErrors {...newProps} />);
 
-    expect(errors.length).toBe(2);
+      const newErrors = root.findAllByType(Text);
+      expect(errors.length).toBe(1);
+      expect(newErrors.length).toBe(1);
+      expect(newErrors[0].props.children).not.toBe(props.messages.valid);
+    });
 
-    comp.update(<FormErrors {...newProps} />);
+    test('when minLength error is updated', () => {
+      const newProps = { ...props, errors: { ...props.errors } };
 
-    const newErrors = root.findAllByType(Text);
-    expect(newErrors.length).toBe(1);
+      newProps.errors.minLength = false;
 
-    expect(newErrors[0].props.children).not.toBe(props.messages.valid);
+      const { root, comp } = render(props);
+      const errors = root.findAllByType(Text);
+
+      comp.update(<FormErrors {...newProps} />);
+
+      const newErrors = root.findAllByType(Text);
+      expect(errors.length).toBe(1);
+      expect(newErrors.length).toBe(1);
+      expect(newErrors[0].props.children).not.toBe(props.messages.minLength);
+    });
+
+    test('when maxLength error is updated', () => {
+      const newProps = { ...props, errors: { ...props.errors } };
+
+      newProps.errors.maxLength = false;
+
+      const { root, comp } = render(props);
+      const errors = root.findAllByType(Text);
+
+      comp.update(<FormErrors {...newProps} />);
+
+      const newErrors = root.findAllByType(Text);
+      expect(errors.length).toBe(1);
+      expect(newErrors.length).toBe(1);
+      expect(newErrors[0].props.children).not.toBe(props.messages.maxLength);
+    });
   });
 
   test('renders null when dirty is false', () => {
@@ -109,26 +185,59 @@ describe('FormErrors.tsx', () => {
     expect(comp.toJSON()).toBe(null);
   });
 
-  test('changes required and valid errors correctly when props update', () => {
-    const newProps = { ...props, errors: { ...props.errors } };
+  describe('changes error message component props correctly when props update', () => {
+    test('error messages ', () => {
+      const newProps = { ...props, errors: { ...props.errors } };
 
-    props.errors.valid = true;
-    props.errors.required = false;
+      props.errors.required = false;
+      props.errors.minLength = false;
+      props.errors.maxLength = false;
+      props.errors.valid = true;
 
-    newProps.errors.valid = false;
-    newProps.errors.required = true;
+      newProps.errors.valid = false;
+      newProps.errors.minLength = false;
+      newProps.errors.maxLength = false;
+      newProps.errors.required = true;
 
-    const { root, comp } = render(props);
-    const firstErrors = root.findAllByType(Text);
+      const { root, comp } = render(props);
+      const firstErrors = root.findAllByType(Text);
 
-    expect(firstErrors.length).toBe(1);
-    expect(firstErrors[0].props.children).toBe(props.messages.valid);
+      expect(firstErrors.length).toBe(1);
+      expect(firstErrors[0].props.children).toBe(props.messages.valid);
 
-    comp.update(<FormErrors {...newProps} />);
+      comp.update(<FormErrors {...newProps} />);
 
-    const updatedErrors = root.findAllByType(Text);
+      const updatedErrors = root.findAllByType(Text);
 
-    expect(updatedErrors.length).toBe(1);
-    expect(updatedErrors[0].props.children).not.toBe(props.messages.valid);
+      expect(updatedErrors.length).toBe(1);
+      expect(updatedErrors[0].props.children).toBe(props.messages.required);
+    });
+
+    test('testID prop ', () => {
+      const newProps = { ...props, errors: { ...props.errors } };
+
+      props.errors.required = false;
+      props.errors.minLength = false;
+      props.errors.maxLength = false;
+      props.errors.valid = true;
+
+      newProps.errors.valid = false;
+      newProps.errors.minLength = false;
+      newProps.errors.maxLength = false;
+      newProps.errors.required = true;
+
+      const { root, comp } = render(props);
+      const firstErrors = root.findAllByType(Text);
+
+      expect(firstErrors.length).toBe(1);
+      expect(firstErrors[0].props.testID).toBe('valid-error');
+
+      comp.update(<FormErrors {...newProps} />);
+
+      const updatedErrors = root.findAllByType(Text);
+
+      expect(updatedErrors.length).toBe(1);
+      expect(updatedErrors[0].props.testID).toBe('required-error');
+    });
   });
 });
