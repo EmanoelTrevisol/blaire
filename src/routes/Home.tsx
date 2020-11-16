@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PostList from '../containers/posts/List';
 import Profile from './Profile';
-import News from '../containers/News';
+import News from '../containers/news/List';
 const Tab = createBottomTabNavigator();
 
 class HomeRoutes extends React.Component {

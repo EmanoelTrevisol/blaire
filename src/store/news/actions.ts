@@ -2,6 +2,7 @@ import { ActionTypes } from './types';
 import { getNews } from '../../api/news';
 import { setNewsLoading } from '../loader/actions';
 import News, { INews } from '../../models/News';
+import { sortNewsByDate } from '../../utils/sort';
 
 export function getLatestNews() {
   return async (dispatch) => {
@@ -10,7 +11,7 @@ export function getLatestNews() {
 
       const res = await getNews();
 
-      const news = res.news.map((n) => new News({ ...n }));
+      const news = sortNewsByDate(res.news).map((n) => new News({ ...n }));
 
       dispatch(setNewsList(news));
     } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { ActivityIndicator, View, SafeAreaView } from 'react-native';
+import { ActivityIndicator, View, SafeAreaView, Text } from 'react-native';
 import { debounce } from 'lodash';
 import { ThunkAction } from 'redux-thunk';
 
@@ -8,13 +8,12 @@ import { Post } from '../../models/Post';
 import PostListTop from '../../components/posts/PostListTop';
 import Postlist from '../../components/posts/PostList';
 import { getPostsList, getPostsByFilter } from '../../store/posts/actions';
+import Loader from '../../components/Loader';
 
 export interface IProps {
   list: Post[];
   dispatch: ThunkAction;
   loading: boolean;
-  getPostsByFilter: typeof getPostsByFilter;
-  getPostsList: typeof getPostsList;
 }
 
 const List = (props: IProps) => {
@@ -63,7 +62,7 @@ const List = (props: IProps) => {
   }, [loadPosts]);
 
   if (loading && !isRefreshing) {
-    return <ActivityIndicator size="large" color="#000" />;
+    return <Loader />;
   }
 
   return (
