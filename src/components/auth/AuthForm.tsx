@@ -12,7 +12,7 @@ import { FormActionTypes, ActionTypes } from '@store/form/types';
 import { formReducer } from '@store/form/reducer';
 import initialFormState from '@store/form/state';
 
-import FormErrors from '../FormErrors';
+import FormErrors from '../form/FormErrors';
 
 import { isValid } from '@validations/email';
 import { matchesPattern } from '@validations/string';

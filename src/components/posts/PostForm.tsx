@@ -6,7 +6,7 @@ import { FormActionTypes, ActionTypes } from '@store/form/types';
 import { formReducer } from '@store/form/reducer';
 import initialFormState from '@store/form/state';
 import LoaderButton from '../LoaderButton';
-import FormErrors from '@components/FormErrors';
+import FormErrors from '@/components/form/FormErrors';
 import { Post } from '@models/Post';
 
 const modifiedInitialFormState = {

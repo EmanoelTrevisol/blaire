@@ -1,6 +1,6 @@
 import React from 'react';
 import PostForm, { IProps } from '@components/posts/PostForm';
-import FormErrors from '@components/FormErrors';
+import FormErrors from '@/components/form/FormErrors';
 import { act } from 'react-test-renderer';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 

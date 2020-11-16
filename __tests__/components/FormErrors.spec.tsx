@@ -1,5 +1,5 @@
 import React from 'react';
-import FormErrors, { IProps } from '@components/FormErrors';
+import FormErrors, { IProps } from '@/components/form/FormErrors';
 import { Text } from 'react-native';
 
 import renderer from 'react-test-renderer';

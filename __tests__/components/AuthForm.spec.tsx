@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthForm, { IAuthFormProps } from '@/components/auth/AuthForm';
-import FormErrors from '@components/FormErrors';
+import FormErrors from '@/components/form/FormErrors';
 import { act } from 'react-test-renderer';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 
