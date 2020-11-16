@@ -12,6 +12,7 @@ module.exports = {
     '^@validations/(.*)$': '<rootDir>/src/validations/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@models/(.*)$': '<rootDir>/src/models/$1',
+    '^@api/(.*)$': '<rootDir>/src/api/$1',
   },
   setupFiles: ['<rootDir>/setupTests.ts'],
 };

@@ -22,6 +22,8 @@ module.exports = {
           '@components': './src/components',
           '@validations': './src/validations',
           '@utils': './src/utils',
+          '@api': './src/api',
+          '@models': './src/models',
         },
       },
     ],
