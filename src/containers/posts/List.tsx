@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { ActivityIndicator, View, SafeAreaView, Text } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { debounce } from 'lodash';
 import { ThunkAction } from 'redux-thunk';
 
-import { Post } from '../../models/Post';
-import PostListTop from '../../components/posts/PostListTop';
-import Postlist from '../../components/posts/PostList';
-import { getPostsList, getPostsByFilter } from '../../store/posts/actions';
-import Loader from '../../components/Loader';
+import { Post } from '@models/Post';
+import PostListTop from '@components/posts/PostListTop';
+import Postlist from '@components/posts/PostList';
+import { getPostsList, getPostsByFilter } from '@store/posts/actions';
+import Loader from '@components/Loader';
 
 export interface IProps {
   list: Post[];
@@ -18,6 +18,7 @@ export interface IProps {
 
 const List = (props: IProps) => {
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+
   const [searchText, setSearchText] = useState<string>('');
 
   const { list, dispatch, loading } = props;
@@ -52,11 +53,6 @@ const List = (props: IProps) => {
     dispatch(getPostsByFilter(search));
   }, 500);
 
-  const onAddClick = () => {
-    // TODO: create post create/edit modal
-    console.log('To open modal');
-  };
-
   useEffect(() => {
     loadPosts(false);
   }, [loadPosts]);
@@ -67,18 +63,12 @@ const List = (props: IProps) => {
 
   return (
     <SafeAreaView>
-      <PostListTop
-        onSearchChange={onSearchChange}
-        onAddClick={onAddClick}
-        searchText={searchText}
+      <PostListTop onSearchChange={onSearchChange} searchText={searchText} />
+      <Postlist
+        refreshing={isRefreshing}
+        onRefresh={() => loadPosts(true)}
+        data={list}
       />
-      <View>
-        <Postlist
-          refreshing={isRefreshing}
-          onRefresh={() => loadPosts(true)}
-          data={list}
-        />
-      </View>
     </SafeAreaView>
   );
 };

@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   Platform,
+  RefreshControl,
 } from 'react-native';
 import { ThunkAction } from 'redux-thunk';
 
@@ -60,6 +61,13 @@ const List = (props: IProps) => {
           onRefresh={() => loadLatestNews(true)}
           keyExtractor={(item) => item.key}
           renderItem={({ item }) => <NewsCard {...item} />}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={() => loadLatestNews(true)}
+              tintColor="#000"
+            />
+          }
         />
       </View>
     </SafeAreaView>

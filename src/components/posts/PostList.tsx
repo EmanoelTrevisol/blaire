@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import PostCard from './PostCard';
 import { Post } from '../../models/Post';
 
@@ -16,11 +16,16 @@ const PostsList = (props: IProps) => {
 
   return (
     <FlatList
-      refreshing={props.refreshing}
-      onRefresh={props.onRefresh}
       data={props.data}
       keyExtractor={(itm) => itm.id}
       renderItem={renderItem}
+      refreshControl={
+        <RefreshControl
+          refreshing={props.refreshing}
+          onRefresh={props.onRefresh}
+          tintColor="#000"
+        />
+      }
     />
   );
 };

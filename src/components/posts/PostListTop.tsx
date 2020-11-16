@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -8,15 +8,39 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import CreateEditModal from '@components/posts/CreateEditModal';
+
 export interface IProps {
   searchText?: string;
   onSearchChange: (search: string) => void;
-  onAddClick: () => void;
 }
 
-const PostListTop = (props: IProps) => {
-  const { searchText, onSearchChange, onAddClick } = props;
+const modalProps = {
+  title: 'Novo post',
+  buttonTitle: 'Criar',
+  isCreate: true,
+};
 
+const PostListTop = (props: IProps) => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+
+  const { searchText, onSearchChange } = props;
+
+  const createPost = async ({
+    title,
+    body,
+  }: {
+    title: string;
+    body: string;
+  }) => {
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 3000);
+    console.log('CREATING POST: ', title, body.length);
+  };
   return (
     <View style={stl.top}>
       <View style={stl.searchBar}>
@@ -30,10 +54,18 @@ const PostListTop = (props: IProps) => {
         />
       </View>
       <View style={stl.newPost}>
-        <TouchableOpacity onPress={onAddClick}>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Icon style={stl.newPostIcon} name="plus" />
         </TouchableOpacity>
       </View>
+      <CreateEditModal
+        {...modalProps}
+        isSubmitting={isSubmitting}
+        visible={modalVisible}
+        post={null}
+        close={() => setModalVisible(false)}
+        onSubmit={createPost}
+      />
     </View>
   );
 };

@@ -1,19 +1,13 @@
-import React, { useState, useReducer } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import React, { useRef, useReducer, useEffect } from 'react';
+import { StyleSheet, View, Text, TextInput } from 'react-native';
 import { cloneDeep } from 'lodash';
 
-import { FormActionTypes, ActionTypes } from '../../store/form/types';
-import { formReducer } from '../../store/form/reducer';
-import initialFormState from '../../store/form/state';
-
-import FormErrors from '../FormErrors';
+import { FormActionTypes, ActionTypes } from '@store/form/types';
+import { formReducer } from '@store/form/reducer';
+import initialFormState from '@store/form/state';
+import LoaderButton from '../LoaderButton';
+import FormErrors from '@components/FormErrors';
+import { Post } from '@models/Post';
 
 const modifiedInitialFormState = {
   ...initialFormState,
@@ -71,17 +65,11 @@ function validateField({
     maxLength: false,
   };
 
-  // console.log('==================================================');
-  // console.log('VALIDATING STRING LENGTH', value.length, lengthLimits);
-  // console.log('MIN LENGTH', value.length < lengthLimits.min);
-  // console.log('MAX LENGTH', value.length > lengthLimits.max);
-  // console.log('VALUE: ', value);
-  // console.log('==================================================\n\n');
-
   if (!value) {
     error = true;
     errors.required = true;
-    errors.valid = false;
+    errors.maxLength = false;
+    errors.minLength = false;
   } else if (value.length < lengthLimits.min) {
     error = true;
     errors.required = false;
@@ -109,13 +97,14 @@ function validateField({
 }
 
 export interface IAuthFormProps {
-  isCreating?: boolean;
+  isCreate?: boolean;
   onSubmit: Function;
   buttonTitle: string;
+  isSubmitting: boolean;
+  post: Post | null;
 }
 
 const PostForm = (props: IAuthFormProps) => {
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [titleState, titleDispatcher] = useReducer(
     formReducer,
     cloneDeep(modifiedInitialFormState),
@@ -125,34 +114,34 @@ const PostForm = (props: IAuthFormProps) => {
     cloneDeep(modifiedInitialFormState),
   );
 
+  const titleInputRef = useRef();
+
+  const { onSubmit, buttonTitle, isSubmitting, isCreate } = props;
+
+  useEffect(() => {
+    if (isCreate) {
+      titleInputRef.current?.focus();
+    }
+  }, [isCreate]);
+
   const submit = async () => {
     validateTitle();
     validateBody();
-    // console.log(
-    //   'HAS ERROR',
-    //   titleState.error || bodyState.error,
-    //   titleState,
-    //   bodyState,
-    // );
     if (titleState.error || bodyState.error) {
       return;
     }
 
     try {
-      setIsSubmitting(true);
-      await props.onSubmit({
+      await onSubmit({
         title: titleState.value,
         body: bodyState.value,
       });
     } catch (error) {
       console.log('Error', error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   const validateTitle = () => {
-    // console.log('ABOUT TO VALIDATE: Title', titleLengthValidations);
     validateField({
       dispatcher: titleDispatcher,
       value: titleState.value,
@@ -161,7 +150,6 @@ const PostForm = (props: IAuthFormProps) => {
   };
 
   const validateBody = () => {
-    // console.log('ABOUT TO VALIDATE: Body', bodyLengthValidations);
     validateField({
       dispatcher: bodyDispatcher,
       value: bodyState.value,
@@ -177,6 +165,7 @@ const PostForm = (props: IAuthFormProps) => {
             <Text style={stl.labelText}>Título</Text>
           </View>
           <TextInput
+            ref={titleInputRef}
             autoCapitalize="none"
             style={stl.input}
             value={titleState.value}
@@ -200,6 +189,8 @@ const PostForm = (props: IAuthFormProps) => {
             <Text style={stl.labelText}>Post</Text>
           </View>
           <TextInput
+            multiline={true}
+            numberOfLines={5}
             style={stl.input}
             value={bodyState.value}
             editable={!isSubmitting}
@@ -217,15 +208,13 @@ const PostForm = (props: IAuthFormProps) => {
         </View>
       </View>
       <View style={stl.actions}>
-        <TouchableOpacity
-          style={stl.button}
-          disabled={isSubmitting}
-          onPress={submit}
+        <LoaderButton
+          buttonStyle={stl.button}
+          isSubmitting={isSubmitting}
+          onSubmit={submit}
         >
-          {(isSubmitting && <ActivityIndicator color="#000" />) || (
-            <Text style={stl.buttonText}>{props.buttonTitle}</Text>
-          )}
-        </TouchableOpacity>
+          <Text style={stl.buttonText}>{buttonTitle}</Text>
+        </LoaderButton>
       </View>
     </>
   );

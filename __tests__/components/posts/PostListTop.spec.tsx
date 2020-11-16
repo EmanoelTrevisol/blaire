@@ -1,5 +1,6 @@
 import React from 'react';
 import PostListTop, { IProps } from '@components/posts/PostListTop';
+import CreateEditModal from '@components/posts/CreateEditModal';
 import { render, waitFor, fireEvent } from '@testing-library/react-native';
 import { TouchableOpacity } from 'react-native';
 
@@ -14,7 +15,6 @@ describe('PostListTop.tsx', () => {
     props = {
       searchText: '',
       onSearchChange: jest.fn(),
-      onAddClick: jest.fn(),
     };
   });
 
@@ -49,14 +49,18 @@ describe('PostListTop.tsx', () => {
     expect(textInput.props.value).toBe(searchText);
   });
 
-  test('calls onAddClick when icon is clicked', async () => {
-    const { UNSAFE_getAllByType } = renderComp(props);
+  test('passes visible to modal on icon click', async () => {
+    const { UNSAFE_getAllByType, UNSAFE_getByType } = renderComp(props);
 
     const addPostButton = UNSAFE_getAllByType(TouchableOpacity);
+    const modal = UNSAFE_getByType(CreateEditModal);
+    const visibleOnInit = modal.props.visible;
 
     await waitFor(() => fireEvent.press(addPostButton[0]));
 
-    expect(addPostButton.length).toBe(1);
-    expect(props.onAddClick).toHaveBeenCalledTimes(1);
+    const visibleModal = UNSAFE_getByType(CreateEditModal);
+
+    expect(visibleOnInit).toBe(false);
+    expect(visibleModal.props.visible).toBe(true);
   });
 });

@@ -84,6 +84,8 @@ Array [
       <TextInput
         allowFontScaling={true}
         editable={true}
+        multiline={true}
+        numberOfLines={5}
         onBlur={[Function]}
         onChangeText={[Function]}
         placeholder="Mal posso esperar para ler o que você tem para contar"
