@@ -34,6 +34,51 @@ exports[`PostCard.tsx matches snapshot 1`] = `
     }
   >
     <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+          "padding": 5,
+          "position": "absolute",
+          "right": 15,
+          "top": 5,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": undefined,
+              "fontSize": 12,
+            },
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "fontFamily": "FontAwesome5Free-Regular",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {
+              "fontWeight": "400",
+            },
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+    <View
       style={
         Object {
           "maxWidth": "60%",

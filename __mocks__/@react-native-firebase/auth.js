@@ -3,4 +3,5 @@ module.exports = jest.fn(() => ({
   signInWithEmailAndPassword: jest.fn(),
   createUserWithEmailAndPassword: jest.fn(),
   onAuthStateChanged: jest.fn(),
+  onUserChanged: jest.fn(),
 }));

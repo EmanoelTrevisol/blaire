@@ -96,9 +96,9 @@ describe('AuthForm.tsx', () => {
         const args = {
           email: 'teste@test.com',
           password: 'EssaEH4n0v4s3nh4',
+          username: '',
         };
 
-        // const submitButton = ;
         const emailInput = queryByPlaceholderText(EMAIL_INPUT_PLACEHOLDER)!;
         const passwordInput = queryByPlaceholderText(
           PASSWORD_INPUT_PLACEHOLDER,
