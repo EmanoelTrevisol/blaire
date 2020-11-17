@@ -15,6 +15,7 @@ import {
 import AuthForm from '@components/auth/AuthForm';
 import Auth from '@utils/firebase/Auth';
 import { onSignIn } from '@utils/Toaster';
+import Colors from '@assets/colors';
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -55,7 +56,11 @@ const SignIn = () => {
         </View>
         <View style={styles.pageFooter}>
           <Text style={styles.optionText}>Ainda não possui uma conta?</Text>
-          <Button title="Cadastrar" onPress={goToSignUp} />
+          <Button
+            color={Colors.primary}
+            title="Cadastrar"
+            onPress={goToSignUp}
+          />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

@@ -16,18 +16,14 @@ import NewsCard from '../../components/news/NewsCard';
 import { getLatestNews } from '../../store/news/actions';
 import Loader from '../../components/Loader';
 import Colors from '@assets/colors';
+import EmptyState from '@components/EmptyState';
+import Logo from '@components/Logo';
 
 export interface IProps {
   list: News[];
   dispatch: ThunkAction;
   loading: boolean;
 }
-
-const ListHeaderComponent = () => (
-  <View>
-    <Image source={require('../../assets/images/grupo-boticario-logo.png')} />
-  </View>
-);
 
 const List = (props: IProps) => {
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
@@ -66,6 +62,7 @@ const List = (props: IProps) => {
   return (
     <SafeAreaView>
       <View style={stl.container}>
+        <Logo />
         <FlatList
           data={list}
           refreshing={isRefreshing}
@@ -79,8 +76,12 @@ const List = (props: IProps) => {
               tintColor={Colors.primary}
             />
           }
-          ListHeaderComponent={ListHeaderComponent}
-          ListHeaderComponentStyle={stl.listHeaderStyle}
+          ListEmptyComponent={
+            <EmptyState
+              title="Ops... nada por aqui"
+              subtitle="parece que você não criou nenhum post ainda"
+            />
+          }
         />
       </View>
     </SafeAreaView>
@@ -94,11 +95,6 @@ const stl = StyleSheet.create({
         marginTop: 15,
       },
     }),
-  },
-  listHeaderStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 25,
   },
 });
 

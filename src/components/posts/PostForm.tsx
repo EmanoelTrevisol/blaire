@@ -40,7 +40,7 @@ const titleLengthValidations = {
 };
 
 const bodyLengthValidations = {
-  min: 30,
+  min: 10,
   max: 280,
 };
 

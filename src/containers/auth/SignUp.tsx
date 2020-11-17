@@ -17,6 +17,7 @@ import AuthForm from '@components/auth/AuthForm';
 import Auth from '@utils/firebase/Auth';
 import { onSignUp } from '@utils/Toaster';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import Colors from '@assets/colors';
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -61,6 +62,7 @@ const SignIn = () => {
             <View style={styles.pageFooter}>
               <Text style={styles.optionText}>Já possui uma conta?</Text>
               <Button
+                color={Colors.primary}
                 title="Fazer login"
                 onPress={() => {
                   navigation.navigate('SignIn');

@@ -17,6 +17,7 @@ import FormErrors from '../form/FormErrors';
 import { isValid } from '@validations/email';
 import { matchesPattern } from '@validations/string';
 import Colors from '@assets/colors';
+import LoaderButton from '../LoaderButton';
 
 const usernameErrorMessages = {
   required: 'Por favor, informe seu nome',
@@ -239,15 +240,14 @@ const LoginForm = (props: IAuthFormProps) => {
         </View>
       </View>
       <View style={stl.actions}>
-        <TouchableOpacity
-          style={stl.button}
-          disabled={isSubmitting}
-          onPress={submit}
+        <LoaderButton
+          loaderColor={Colors.black}
+          isSubmitting={isSubmitting}
+          buttonStyle={stl.button}
+          onSubmit={submit}
         >
-          {(isSubmitting && <ActivityIndicator color="#000" />) || (
-            <Text style={stl.buttonText}>{props.buttonTitle}</Text>
-          )}
-        </TouchableOpacity>
+          <Text style={stl.buttonText}>{props.buttonTitle}</Text>
+        </LoaderButton>
       </View>
     </>
   );

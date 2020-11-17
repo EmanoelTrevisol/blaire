@@ -65,7 +65,17 @@ const Details = () => {
         </View>
       </SafeAreaView>
       <NavigationContainer independent={true}>
-        <Tab.Navigator initialLayout={initialLayout} initialRouteName="MyPosts">
+        <Tab.Navigator
+          initialLayout={initialLayout}
+          initialRouteName="MyPosts"
+          tabBarOptions={{
+            activeTintColor: Colors.accentColor,
+            inactiveTintColor: Colors.primary,
+            indicatorStyle: {
+              backgroundColor: Colors.primaryLight,
+            },
+          }}
+        >
           <Tab.Screen
             name="MyPosts"
             component={MyPosts}
