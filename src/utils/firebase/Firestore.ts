@@ -51,7 +51,7 @@ export default abstract class Firestore<T> {
 
   async getById(id: string) {
     const doc = await this.collection.doc(id).get();
-    console.log('GOT BY ID', doc);
+
     return new this.model({ id: doc.id, ...doc.data() });
   }
 
@@ -61,12 +61,17 @@ export default abstract class Firestore<T> {
   }
 
   async getDocsByUserId(userId: string) {
+    console.log('USER ID', userId);
     const search = await this.collection
       .where('userId', '==', userId)
       .orderBy('createdAt', 'desc')
       .get();
 
     return this.getModels(search);
+  }
+
+  deleteDocById(docId: string) {
+    return this.collection.doc(docId).delete();
   }
 
   async updateDocById(docId: string, fields: { [key: string]: any }) {

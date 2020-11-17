@@ -37,7 +37,8 @@ export default function (state = initialState, action: PostActionTypes) {
 
       return {
         ...state,
-        list: state.list.filter((post) => post.id !== postId),
+        list: [...state.list.filter((post) => post.id !== postId)],
+        userPosts: [...state.userPosts.filter((post) => post.id !== postId)],
       };
     default:
       return state;

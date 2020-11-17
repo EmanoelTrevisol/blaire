@@ -9,6 +9,7 @@ import PostListTop from '@components/posts/PostListTop';
 import Postlist from '@components/posts/PostList';
 import { getPostsList, getPostsByFilter } from '@store/posts/actions';
 import Loader from '@components/Loader';
+import EmptyState from '@/components/EmptyState';
 
 export interface IProps {
   list: Post[];
@@ -60,6 +61,15 @@ const List = (props: IProps) => {
     return <Loader />;
   }
 
+  const listEmptyStateComp = () => (
+    <EmptyState
+      title={searchText ? 'Ops... nenhum resultado' : ''}
+      subtitle={
+        searchText ? `Não encontramos nada com a pesquisa '${searchText}'` : ''
+      }
+    />
+  );
+
   return (
     <SafeAreaView>
       <PostListTop onSearchChange={onSearchChange} searchText={searchText} />
@@ -67,6 +77,8 @@ const List = (props: IProps) => {
         refreshing={isRefreshing}
         onRefresh={() => loadPosts(true)}
         data={list}
+        showEditIcon={false}
+        listEmptyStateComp={listEmptyStateComp()}
       />
     </SafeAreaView>
   );

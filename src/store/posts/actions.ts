@@ -33,12 +33,24 @@ export function updatePostInList(postId: string, post: Post) {
   };
 }
 
-export function deletePost(postId: string) {
+export function deletePostFromLists(postId: string) {
   return {
     type: ActionTypes.DELETE_POST,
     payload: {
       postId,
     },
+  };
+}
+
+export function deletePost(postId: string) {
+  return async (dispatch) => {
+    try {
+      await postsStore.deleteDocById(postId);
+
+      dispatch(deletePostFromLists(postId));
+    } catch (error) {
+      console.log('Error deleting', error);
+    }
   };
 }
 
@@ -57,6 +69,7 @@ export function createPost({ title, body }: { title: string; body: string }) {
       });
 
       dispatch(getPostsList());
+      dispatch(getUserPosts());
     } catch (error) {
       console.log('Error creating post on action', error);
     }

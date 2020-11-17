@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Platform,
   RefreshControl,
+  Image,
 } from 'react-native';
 import { ThunkAction } from 'redux-thunk';
 
@@ -20,6 +21,12 @@ export interface IProps {
   dispatch: ThunkAction;
   loading: boolean;
 }
+
+const ListHeaderComponent = () => (
+  <View>
+    <Image source={require('../../assets/images/grupo-boticario-logo.png')} />
+  </View>
+);
 
 const List = (props: IProps) => {
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
@@ -68,6 +75,8 @@ const List = (props: IProps) => {
               tintColor="#000"
             />
           }
+          ListHeaderComponent={ListHeaderComponent}
+          ListHeaderComponentStyle={stl.listHeaderStyle}
         />
       </View>
     </SafeAreaView>
@@ -81,6 +90,11 @@ const stl = StyleSheet.create({
         marginTop: 15,
       },
     }),
+  },
+  listHeaderStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 25,
   },
 });
 

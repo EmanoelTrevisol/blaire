@@ -12,6 +12,8 @@ interface IProps {
   onRefresh: () => {};
   data: Post[];
   showEditIcon: boolean;
+  confirmDelete?: Function;
+  listEmptyStateComp: JSX.Element;
 }
 
 const modalInfo = {
@@ -32,6 +34,9 @@ const PostsList = (props: IProps) => {
         {...item}
         onEditPress={() => prepareEditPost(item)}
         showEditIcon={props.showEditIcon}
+        onDeletePress={() => {
+          props.confirmDelete && props.confirmDelete(item.id);
+        }}
       />
     );
   };
@@ -50,7 +55,6 @@ const PostsList = (props: IProps) => {
     } catch (error) {
       console.log('Error editing post', error);
       clearData();
-    } finally {
     }
   };
 
@@ -85,6 +89,7 @@ const PostsList = (props: IProps) => {
             tintColor="#000"
           />
         }
+        ListEmptyComponent={props.listEmptyStateComp}
       />
     </>
   );
