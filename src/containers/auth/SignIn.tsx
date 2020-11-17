@@ -11,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
+import { treatErrors } from '@errors/handler';
 
 import AuthForm from '@components/auth/AuthForm';
 import Auth from '@utils/firebase/Auth';
@@ -27,14 +28,18 @@ const SignIn = () => {
     email: string;
     password: string;
   }) => {
-    const cresdentials = (await Auth.signIn(
-      email,
-      password,
-    )) as FirebaseAuthTypes.UserCredential;
+    try {
+      const cresdentials = (await Auth.signIn(
+        email,
+        password,
+      )) as FirebaseAuthTypes.UserCredential;
 
-    onSignIn(cresdentials.user.displayName!);
+      onSignIn(cresdentials.user.displayName!);
 
-    return cresdentials;
+      return cresdentials;
+    } catch (error) {
+      return treatErrors(error);
+    }
   };
 
   const goToSignUp = () => {
