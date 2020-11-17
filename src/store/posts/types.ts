@@ -2,7 +2,7 @@ import { Post } from '../../models/Post';
 
 export enum ActionTypes {
   SET_POSTS_LIST = 'SET_POSTS_LIST',
-  SET_POST_DETAIL = 'SET_POST_DETAIL',
+  SET_USER_POSTS_LIST = 'SET_USER_POSTS_LIST',
   UPDATE_POST = 'UPDATE_POST',
   DELETE_POST = 'DELETE_POST',
 }
@@ -15,18 +15,17 @@ export interface ISetPostsList {
   };
 }
 
-export interface ISetPostDetail {
-  type: ActionTypes.SET_POST_DETAIL;
+export interface ISetUserPostsList {
+  type: ActionTypes.SET_USER_POSTS_LIST;
   payload: {
-    // TODO: Add type for post
-    post: Post;
+    posts: Post[];
   };
 }
 
 export interface IUpdatePost {
   type: ActionTypes.UPDATE_POST;
   payload: {
-    // TODO: Add type for post
+    postId: string;
     post: Post;
   };
 }
@@ -40,6 +39,6 @@ export interface IDeletePost {
 
 export type PostActionTypes =
   | ISetPostsList
-  | ISetPostDetail
+  | ISetUserPostsList
   | IUpdatePost
   | IDeletePost;

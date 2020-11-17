@@ -14,12 +14,21 @@ export function setPostsList(posts: Post[]) {
   };
 }
 
-export function updatePost(postId: string, newData: Partial<Post>) {
+export function setUserPostsList(posts: Post[]) {
+  return {
+    type: ActionTypes.SET_USER_POSTS_LIST,
+    payload: {
+      posts,
+    },
+  };
+}
+
+export function updatePostInList(postId: string, post: Post) {
   return {
     type: ActionTypes.UPDATE_POST,
     payload: {
-      // TODO: fix logix
-      post: { ...newData },
+      postId,
+      post,
     },
   };
 }
@@ -54,6 +63,18 @@ export function createPost({ title, body }: { title: string; body: string }) {
   };
 }
 
+export function updatePost(postId: string, post: Partial<Post>) {
+  return async (dispatch) => {
+    try {
+      const newPost = await postsStore.updateDocById(postId, post);
+
+      dispatch(updatePostInList(postId, newPost));
+    } catch (error) {
+      console.log('Error updating post', postId, error);
+    }
+  };
+}
+
 export function getPostsByFilter(filter: string) {
   return async (dispatch) => {
     try {
@@ -62,6 +83,20 @@ export function getPostsByFilter(filter: string) {
       dispatch(setPostsList(posts));
     } catch (error) {
       console.log('Error getting post list by filter', error);
+    }
+  };
+}
+
+export function getUserPosts() {
+  return async (dispatch, getState) => {
+    try {
+      const userId = getState().auth.user.uid;
+
+      const posts = await postsStore.getDocsByUserId(userId);
+
+      dispatch(setUserPostsList(posts));
+    } catch (error) {
+      console.log('Error getting user posts', error);
     }
   };
 }

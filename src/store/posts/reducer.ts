@@ -1,5 +1,6 @@
 import { ActionTypes, PostActionTypes } from './types';
 import initialState from './state';
+import { cloneDeep } from 'lodash';
 
 export default function (state = initialState, action: PostActionTypes) {
   switch (action.type) {
@@ -8,16 +9,28 @@ export default function (state = initialState, action: PostActionTypes) {
         ...state,
         list: [...action.payload.posts],
       };
-    case ActionTypes.SET_POST_DETAIL:
+    case ActionTypes.SET_USER_POSTS_LIST:
       return {
         ...state,
-        detail: { ...action.payload.post },
+        userPosts: [...action.payload.posts],
       };
     case ActionTypes.UPDATE_POST:
-      // TODO: define update logic
+      const userPosts = cloneDeep(
+        [...state.userPosts].map((post) =>
+          post.id === action.payload.postId ? action.payload.post : post,
+        ),
+      );
+
+      const list = cloneDeep(
+        [...state.list].map((post) =>
+          post.id === action.payload.postId ? action.payload.post : post,
+        ),
+      );
+
       return {
         ...state,
-        // action.payload,
+        userPosts,
+        list,
       };
     case ActionTypes.DELETE_POST:
       const postId = action.payload.postId;

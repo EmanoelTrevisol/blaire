@@ -8,6 +8,7 @@ import initialFormState from '@store/form/state';
 import LoaderButton from '../LoaderButton';
 import FormErrors from '@/components/form/FormErrors';
 import { Post } from '@models/Post';
+import { useDispatch } from 'react-redux';
 
 const modifiedInitialFormState = {
   ...initialFormState,
@@ -116,13 +117,22 @@ const PostForm = (props: IAuthFormProps) => {
 
   const titleInputRef = useRef();
 
-  const { onSubmit, buttonTitle, isSubmitting, isCreate } = props;
+  const { onSubmit, buttonTitle, isSubmitting, isCreate, post } = props;
 
   useEffect(() => {
     if (isCreate) {
       titleInputRef.current?.focus();
+    } else {
+      titleDispatcher({
+        type: ActionTypes.SET_VALUE,
+        payload: { value: post?.title! },
+      });
+      bodyDispatcher({
+        type: ActionTypes.SET_VALUE,
+        payload: { value: post?.body! },
+      });
     }
-  }, [isCreate]);
+  }, [isCreate, post]);
 
   const submit = async () => {
     validateTitle();

@@ -49,13 +49,32 @@ export default abstract class Firestore<T> {
     return this.getModels(search);
   }
 
-  getById(id: string) {
-    return this.collection.doc(id);
+  async getById(id: string) {
+    const doc = await this.collection.doc(id).get();
+    console.log('GOT BY ID', doc);
+    return new this.model({ id: doc.id, ...doc.data() });
   }
 
   createNewDoc(fields: { [key: string]: any }) {
     const date = Date.now();
     return this.collection.add({ ...fields, createdAt: date, updatedAt: date });
+  }
+
+  async getDocsByUserId(userId: string) {
+    const search = await this.collection
+      .where('userId', '==', userId)
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    return this.getModels(search);
+  }
+
+  async updateDocById(docId: string, fields: { [key: string]: any }) {
+    const updatedAt = Date.now();
+
+    await this.collection.doc(docId).update({ ...fields, updatedAt });
+
+    return this.getById(docId);
   }
 
   abstract getListByFilter(filter: any): Promise<T[]>;

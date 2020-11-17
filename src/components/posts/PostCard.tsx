@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { simpleShow } from '@utils/Toaster';
 
 const Detail = (props) => {
-  const { title, body, username, createdAt, id } = props;
+  const {
+    title,
+    body,
+    username,
+    createdAt,
+    id,
+    onEditPress,
+    showEditIcon,
+  } = props;
 
   const setFavorite = () => {
     simpleShow(
       'Ahh, infelizmente essa funcionalidade ainda não está disponível',
     );
-    console.log('setting favorite: ', id);
   };
 
   return (
     <View style={stl.card}>
       <View style={stl.header}>
-        <TouchableOpacity style={stl.iconTouchable} onPress={setFavorite}>
+        {(showEditIcon && (
+          <TouchableOpacity style={stl.editIconTouchable} onPress={onEditPress}>
+            <Icon style={stl.favoriteIcon} name={'pencil-alt'} />
+          </TouchableOpacity>
+        )) ||
+          null}
+        <TouchableOpacity
+          style={stl.favoriteIconTouchable}
+          onPress={setFavorite}
+        >
           <Icon style={stl.favoriteIcon} name={'heart'} />
         </TouchableOpacity>
         <View style={stl.headerTitle}>
@@ -84,10 +100,16 @@ const stl = StyleSheet.create({
     flex: 1,
     flexWrap: 'wrap',
   },
-  iconTouchable: {
+  favoriteIconTouchable: {
     position: 'absolute',
     top: 5,
     right: 15,
+    padding: 5,
+  },
+  editIconTouchable: {
+    position: 'absolute',
+    top: 5,
+    right: 40,
     padding: 5,
   },
   favoriteIcon: {

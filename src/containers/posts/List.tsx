@@ -44,7 +44,6 @@ const List = (props: IProps) => {
   );
 
   const onSearchChange = (search: string) => {
-    console.log('search text change: ', search);
     setSearchText(search);
     searchPosts(search);
   };
