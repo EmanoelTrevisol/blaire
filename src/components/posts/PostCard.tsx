@@ -1,13 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-// import { Container } from './styles';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { simpleShow } from '@utils/Toaster';
 
 const Detail = (props) => {
-  const { title, body, username, createdAt } = props;
+  const { title, body, username, createdAt, id } = props;
+
+  const setFavorite = () => {
+    simpleShow(
+      'Ahh, infelizmente essa funcionalidade ainda não está disponível',
+    );
+    console.log('setting favorite: ', id);
+  };
 
   return (
     <View style={stl.card}>
       <View style={stl.header}>
+        <TouchableOpacity style={stl.iconTouchable} onPress={setFavorite}>
+          <Icon style={stl.favoriteIcon} name={'heart'} />
+        </TouchableOpacity>
         <View style={stl.headerTitle}>
           <Text style={stl.headerTitleText}>{title}</Text>
           <Text style={stl.headetTitleSubText}>{createdAt}</Text>
@@ -72,6 +83,15 @@ const stl = StyleSheet.create({
     textAlign: 'center',
     flex: 1,
     flexWrap: 'wrap',
+  },
+  iconTouchable: {
+    position: 'absolute',
+    top: 5,
+    right: 15,
+    padding: 5,
+  },
+  favoriteIcon: {
+    fontSize: 14,
   },
   body: {
     padding: 15,

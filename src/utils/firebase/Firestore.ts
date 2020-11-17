@@ -27,7 +27,7 @@ export default abstract class Firestore<T> {
 
   async getList() {
     // TODO: Add order by created
-    const search = await this.collection.get();
+    const search = await this.collection.orderBy('updatedAt', 'desc').get();
 
     return this.getModels(search);
   }
@@ -51,6 +51,11 @@ export default abstract class Firestore<T> {
 
   getById(id: string) {
     return this.collection.doc(id);
+  }
+
+  createNewDoc(fields: { [key: string]: any }) {
+    const date = Date.now();
+    return this.collection.add({ ...fields, createdAt: date, updatedAt: date });
   }
 
   abstract getListByFilter(filter: any): Promise<T[]>;

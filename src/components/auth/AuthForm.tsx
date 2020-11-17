@@ -19,7 +19,7 @@ import { matchesPattern } from '@validations/string';
 
 const usernameErrorMessages = {
   required: 'Por favor, informe seu nome',
-  valid: 'Ops... continue digitando. Estamos quase lá',
+  valid: 'Ops... ',
 };
 
 const emailErrorMessages = {
@@ -131,7 +131,8 @@ const LoginForm = (props: IAuthFormProps) => {
     validateField({
       dispatcher: usernameDispatcher,
       value: usernameState.value,
-      validateFn: (username: string) => username.length > 3,
+      validateFn: (username: string) =>
+        username.length > 3 && username.length <= 50,
     });
   };
 

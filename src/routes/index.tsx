@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import AuthRoutes from './Auth';
 import Auth from '../utils/firebase/Auth';
 import HomeRoutes from './Home';
 
 interface IRouteProps {
-  // TODO: add user type
-  user: any;
+  user: FirebaseAuthTypes.User;
   token: string;
   loading: boolean;
   dispatch: Function;

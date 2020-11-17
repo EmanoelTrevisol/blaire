@@ -5,22 +5,11 @@ import PostStore, { Post } from '../../models/Post';
 
 const postsStore = new PostStore();
 
-// TODO: add posts type
 export function setPostsList(posts: Post[]) {
   return {
     type: ActionTypes.SET_POSTS_LIST,
     payload: {
       posts,
-    },
-  };
-}
-
-export function setDetailPost(postId: string) {
-  // TODO: add post type and post itself
-  return {
-    type: ActionTypes.SET_POST_DETAIL,
-    payload: {
-      post: null,
     },
   };
 }
@@ -41,6 +30,27 @@ export function deletePost(postId: string) {
     payload: {
       postId,
     },
+  };
+}
+
+export function createPost({ title, body }: { title: string; body: string }) {
+  return async (dispatch, getState) => {
+    try {
+      const { displayName, uid } = getState().auth.user;
+
+      // username would not be saved here.
+      // It is here because firestore does not provide join/populate
+      await postsStore.createNewDoc({
+        title,
+        body,
+        username: displayName,
+        userId: uid,
+      });
+
+      dispatch(getPostsList());
+    } catch (error) {
+      console.log('Error creating post on action', error);
+    }
   };
 }
 

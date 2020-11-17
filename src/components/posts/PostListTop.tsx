@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { useDispatch } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
+import { createPost as createPostAction } from '@store/posts/actions';
 import CreateEditModal from '@components/posts/CreateEditModal';
 
 export interface IProps {
@@ -24,6 +26,7 @@ const modalProps = {
 const PostListTop = (props: IProps) => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const { searchText, onSearchChange } = props;
 
@@ -34,13 +37,16 @@ const PostListTop = (props: IProps) => {
     title: string;
     body: string;
   }) => {
-    setIsSubmitting(true);
+    try {
+      setIsSubmitting(true);
 
-    setTimeout(() => {
+      await dispatch(createPostAction({ title, body }));
+    } catch (error) {
+      console.log('Error creating post', error);
       setIsSubmitting(false);
-    }, 3000);
-    console.log('CREATING POST: ', title, body.length);
+    }
   };
+
   return (
     <View style={stl.top}>
       <View style={stl.searchBar}>

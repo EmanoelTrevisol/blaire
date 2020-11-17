@@ -7,3 +7,7 @@ export function onSignUp(username: string) {
 export function onSignIn(username: string) {
   return Toast.show(`Muito bom te ver novamente, ${username}!`);
 }
+
+export function simpleShow(message: string) {
+  return Toast.show(message);
+}

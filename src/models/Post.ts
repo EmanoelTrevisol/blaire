@@ -8,7 +8,8 @@ export interface IPostFields {
   body: string;
   createdAt: number | string | Date;
   updatedAt: number | string | Date;
-  // username: string;
+  username: string;
+  userId: string;
 }
 
 export class Post implements IPostFields {
@@ -18,6 +19,7 @@ export class Post implements IPostFields {
   createdAt: number | string | Date;
   updatedAt: number | string | Date;
   username: string;
+  userId: string;
 
   constructor({
     id,
@@ -25,19 +27,20 @@ export class Post implements IPostFields {
     body,
     createdAt,
     updatedAt,
-  }: // username,
-  IPostFields) {
+    username,
+    userId,
+  }: IPostFields) {
     this.id = id;
     this.title = title;
     this.body = body;
-    // this.username = username;
-    this.createdAt = moment(createdAt).format('lll');
-    this.updatedAt = moment(updatedAt).format('lll');
-    // Placeholder while username is not saved in firebase
-    this.username =
-      Math.floor(Math.random() * 10) % 2 === 0
-        ? 'Emanoel Trevisol'
-        : 'Emanoel Trevisol Frederico';
+    this.username = username;
+    this.userId = userId;
+    this.createdAt = moment(createdAt).calendar(null, {
+      sameElse: 'lll',
+    });
+    this.updatedAt = moment(updatedAt).calendar(null, {
+      sameElse: 'lll',
+    });
   }
 }
 
