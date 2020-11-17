@@ -4,6 +4,7 @@ import PostList from '@components/posts/PostList';
 import { getUserPosts, deletePost } from '@store/posts/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import EmptyState from '@/components/EmptyState';
+import { treatError } from '../../errors/handler';
 
 const MyPosts = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -15,17 +16,18 @@ const MyPosts = () => {
   const getPosts = async () => {
     try {
       setRefreshing(true);
-      console.log('GETTING MY POSTS');
       await dispatch(getUserPosts());
     } catch (error) {
-      console.log('error', error);
+      return treatError(
+        error,
+        'Houve um problema ao pegar as informações. Por favor, tente novamente',
+      );
     } finally {
       setRefreshing(false);
     }
   };
 
   useEffect(() => {
-    console.log('USE EFFECT MY POSTS');
     getPosts();
   }, []);
 

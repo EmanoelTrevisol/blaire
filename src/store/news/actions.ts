@@ -3,6 +3,7 @@ import { getNews } from '../../api/news';
 import { setNewsLoading } from '../loader/actions';
 import News, { INews } from '../../models/News';
 import { sortNewsByDate } from '../../utils/sort';
+import { treatError } from '../../errors/handler';
 
 export function getLatestNews() {
   return async (dispatch) => {
@@ -15,8 +16,10 @@ export function getLatestNews() {
 
       dispatch(setNewsList(news));
     } catch (error) {
-      // TODO: treat error
-      console.log(error);
+      return treatError(
+        error,
+        'Ops... tivemos um problema ao pegar as últimas novidades',
+      );
     } finally {
       dispatch(setNewsLoading(false));
     }

@@ -6,6 +6,7 @@ import { updatePost } from '@store/posts/actions';
 import PostCard from './PostCard';
 import { Post } from '@models/Post';
 import CreateEditModal from './CreateEditModal';
+import { treatError } from '../../errors/handler';
 
 interface IProps {
   refreshing: boolean;
@@ -50,11 +51,14 @@ const PostsList = (props: IProps) => {
     try {
       setIsSubmitting(true);
 
-      await dispatch(updatePost(postEditData?.id!, data));
+      dispatch(updatePost(postEditData?.id!, data));
       clearData();
     } catch (error) {
-      console.log('Error editing post', error);
       clearData();
+      return treatError(
+        error,
+        'Houve um problema ao editar o post. Por favor, tente novamente',
+      );
     }
   };
 

@@ -61,7 +61,6 @@ export default abstract class Firestore<T> {
   }
 
   async getDocsByUserId(userId: string) {
-    console.log('USER ID', userId);
     const search = await this.collection
       .where('userId', '==', userId)
       .orderBy('createdAt', 'desc')

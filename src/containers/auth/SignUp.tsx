@@ -16,6 +16,7 @@ import {
 import AuthForm from '@components/auth/AuthForm';
 import Auth from '@utils/firebase/Auth';
 import { onSignUp } from '@utils/Toaster';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -29,13 +30,13 @@ const SignIn = () => {
     email: string;
     password: string;
   }) => {
-    try {
-      const user = await Auth.signUp({ username, email, password });
+    const user = (await Auth.signUp({
+      username,
+      email,
+      password,
+    })) as FirebaseAuthTypes.User;
 
-      onSignUp(user?.displayName!);
-    } catch (error) {
-      console.log('Error signing up', error);
-    }
+    onSignUp(user.displayName!);
   };
 
   return (

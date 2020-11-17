@@ -8,7 +8,7 @@ import initialFormState from '@store/form/state';
 import LoaderButton from '../LoaderButton';
 import FormErrors from '@/components/form/FormErrors';
 import { Post } from '@models/Post';
-import { useDispatch } from 'react-redux';
+import { treatError } from '../../errors/handler';
 
 const modifiedInitialFormState = {
   ...initialFormState,
@@ -147,7 +147,10 @@ const PostForm = (props: IAuthFormProps) => {
         body: bodyState.value,
       });
     } catch (error) {
-      console.log('Error', error);
+      treatError(
+        error,
+        'Ops... encontramos um problema. Por favor, tente novamente',
+      );
     }
   };
 

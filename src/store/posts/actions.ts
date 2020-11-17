@@ -2,7 +2,7 @@ import { ActionTypes } from './types';
 import { setPostsLoading } from '../loader/actions';
 
 import PostStore, { Post } from '../../models/Post';
-
+import { treatError } from '../../errors/handler';
 const postsStore = new PostStore();
 
 export function setPostsList(posts: Post[]) {
@@ -49,7 +49,10 @@ export function deletePost(postId: string) {
 
       dispatch(deletePostFromLists(postId));
     } catch (error) {
-      console.log('Error deleting', error);
+      return treatError(
+        error,
+        'Ops... algo deu errado na remoção. Por favor, tente novamente',
+      );
     }
   };
 }
@@ -71,7 +74,10 @@ export function createPost({ title, body }: { title: string; body: string }) {
       dispatch(getPostsList());
       dispatch(getUserPosts());
     } catch (error) {
-      console.log('Error creating post on action', error);
+      return treatError(
+        error,
+        'Ops... algo deu errado na criação do seu post. Por favor, tente novamente',
+      );
     }
   };
 }
@@ -83,7 +89,10 @@ export function updatePost(postId: string, post: Partial<Post>) {
 
       dispatch(updatePostInList(postId, newPost));
     } catch (error) {
-      console.log('Error updating post', postId, error);
+      return treatError(
+        error,
+        'Ops... Tivemos um problema ao atualizar seu post. Por favor, tente novamente',
+      );
     }
   };
 }
@@ -95,7 +104,10 @@ export function getPostsByFilter(filter: string) {
 
       dispatch(setPostsList(posts));
     } catch (error) {
-      console.log('Error getting post list by filter', error);
+      return treatError(
+        error,
+        'Ops... tivemos um problema com a sua pesquisa. Por favor, tente novamente',
+      );
     }
   };
 }
@@ -109,7 +121,10 @@ export function getUserPosts() {
 
       dispatch(setUserPostsList(posts));
     } catch (error) {
-      console.log('Error getting user posts', error);
+      return treatError(
+        error,
+        'Ops... tivemos um problema ao pegar seus posts. Por favor, tente novamente',
+      );
     }
   };
 }
@@ -123,7 +138,7 @@ export function getPostsList() {
       // TODO: Fix posts type problem
       dispatch(setPostsList(posts));
     } catch (error) {
-      console.log('Error getting post list', error);
+      return treatError(error, 'Ops... tivemos um erro ao pegar os posts');
       throw error;
     } finally {
       dispatch(setPostsLoading(false));

@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { createPost as createPostAction } from '@store/posts/actions';
 import CreateEditModal from '@components/posts/CreateEditModal';
+import { treatError } from '../../errors/handler';
 
 export interface IProps {
   searchText?: string;
@@ -42,8 +43,11 @@ const PostListTop = (props: IProps) => {
 
       await dispatch(createPostAction({ title, body }));
     } catch (error) {
-      console.log('Error creating post', error);
       setIsSubmitting(false);
+      return treatError(
+        error,
+        'Tivemos um problema ao criar seu post. Por favor, tente novamente',
+      );
     }
   };
 

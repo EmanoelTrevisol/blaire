@@ -1,6 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import { setAppLoading } from '../../store/loader/actions';
 import { setUserInfo } from '../../store/auth/actions';
+import { treatError } from '../../errors/handler';
 
 export default class Auth {
   protected dispatch: Function;
@@ -14,17 +15,30 @@ export default class Auth {
     email: string;
     password: string;
   }) {
-    await auth().createUserWithEmailAndPassword(email, password);
+    try {
+      await auth().createUserWithEmailAndPassword(email, password);
 
-    const currentUser = Auth.getCurrentUser();
+      const currentUser = Auth.getCurrentUser();
 
-    await currentUser?.updateProfile({ displayName: username });
+      await currentUser?.updateProfile({ displayName: username });
 
-    return Auth.getCurrentUser();
+      return Auth.getCurrentUser();
+    } catch (error) {
+      return treatError(error);
+    }
   }
 
-  static signIn(email: string, password: string) {
-    return auth().signInWithEmailAndPassword(email, password);
+  static async signIn(email: string, password: string) {
+    try {
+      const credencials = await auth().signInWithEmailAndPassword(
+        email,
+        password,
+      );
+
+      return credencials;
+    } catch (error) {
+      return treatError(error);
+    }
   }
 
   static logout() {

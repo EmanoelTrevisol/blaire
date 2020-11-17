@@ -10,6 +10,7 @@ import Postlist from '@components/posts/PostList';
 import { getPostsList, getPostsByFilter } from '@store/posts/actions';
 import Loader from '@components/Loader';
 import EmptyState from '@/components/EmptyState';
+import { treatError } from '../../errors/handler';
 
 export interface IProps {
   list: Post[];
@@ -34,7 +35,10 @@ const List = (props: IProps) => {
           ? dispatch(getPostsByFilter(searchText))
           : dispatch(getPostsList()));
       } catch (error) {
-        console.log('ERROR on refresh', error);
+        treatError(
+          error,
+          'Houve um problema ao pegar as informações. Por favor, tente noavmente',
+        );
       } finally {
         if (isRefresh) {
           setIsRefreshing(false);

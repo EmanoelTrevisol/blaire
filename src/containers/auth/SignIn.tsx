@@ -1,4 +1,5 @@
 import React from 'react';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import {
   View,
@@ -25,15 +26,14 @@ const SignIn = () => {
     email: string;
     password: string;
   }) => {
-    try {
-      const cresdentials = await Auth.signIn(email, password);
+    const cresdentials = (await Auth.signIn(
+      email,
+      password,
+    )) as FirebaseAuthTypes.UserCredential;
 
-      onSignIn(cresdentials.user.displayName!);
+    onSignIn(cresdentials.user.displayName!);
 
-      return cresdentials;
-    } catch (error) {
-      console.log('Error signing in', error);
-    }
+    return cresdentials;
   };
 
   const goToSignUp = () => {

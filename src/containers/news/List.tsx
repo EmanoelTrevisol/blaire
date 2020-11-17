@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { ThunkAction } from 'redux-thunk';
-
+import { treatError } from '../../errors/handler';
 import News from '../../models/News';
 import NewsCard from '../../components/news/NewsCard';
 import { getLatestNews } from '../../store/news/actions';
@@ -41,7 +41,10 @@ const List = (props: IProps) => {
         }
         await dispatch(getLatestNews());
       } catch (error) {
-        console.log('ERROR on refresh', error);
+        return treatError(
+          error,
+          'Tivemos um problema ao carregar as novidades. Por favor, tente novamente',
+        );
       } finally {
         if (isRefresh) {
           setIsRefreshing(false);

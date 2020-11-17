@@ -118,8 +118,7 @@ const LoginForm = (props: IAuthFormProps) => {
         email: emailState.value,
         password: passwordState.value,
       });
-    } catch (error) {
-      console.log('Error', error);
+      // Error here is treated in Auth.ts, which is invoked by this component parents
     } finally {
       if (isMounted.current) {
         setIsSubmitting(false);
