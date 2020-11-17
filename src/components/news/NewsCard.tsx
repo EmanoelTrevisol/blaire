@@ -3,6 +3,8 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 
 import { INews } from '../../models/News';
 
+import Colors from '@assets/colors';
+
 const NewsCard = (props: INews) => {
   const { username, createdAt, profilePicture, message } = props;
 
@@ -22,13 +24,13 @@ const NewsCard = (props: INews) => {
 
 const stl = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     paddingVertical: 10,
     marginHorizontal: 15,
     marginBottom: 15,
     borderRadius: 20,
     elevation: 10,
-    shadowColor: '#000',
+    shadowColor: Colors.black,
     shadowRadius: 3,
     shadowOpacity: 0.2,
     shadowOffset: {
@@ -40,7 +42,7 @@ const stl = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomColor: '#DADADA',
+    borderBottomColor: Colors.dividerColor,
     borderBottomWidth: 1,
   },
   profilePicture: {
@@ -52,13 +54,15 @@ const stl = StyleSheet.create({
   username: {
     fontSize: 24,
     fontWeight: '600',
+    color: Colors.primaryText,
   },
   createdAt: {
     fontSize: 12,
-    color: '#444',
+    color: Colors.secondaryText,
   },
   body: {
     padding: 20,
+    color: Colors.primaryText,
     // paddingHorizontal: 20,
     // paddingVertical: 16,
   },

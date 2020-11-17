@@ -7,6 +7,7 @@ import PostCard from './PostCard';
 import { Post } from '@models/Post';
 import CreateEditModal from './CreateEditModal';
 import { treatError } from '../../errors/handler';
+import Colors from '@assets/colors';
 
 interface IProps {
   refreshing: boolean;
@@ -90,7 +91,7 @@ const PostsList = (props: IProps) => {
           <RefreshControl
             refreshing={props.refreshing}
             onRefresh={props.onRefresh}
-            tintColor="#000"
+            tintColor={Colors.primary}
           />
         }
         ListEmptyComponent={props.listEmptyStateComp}

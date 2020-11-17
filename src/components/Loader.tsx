@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import Colors from '@assets/colors';
 
 export enum Sizes {
   LARGE = 'large',
@@ -11,7 +12,7 @@ export interface IProps {
   color?: string;
 }
 
-const Loader = ({ size = Sizes.LARGE, color = '#000' }: IProps) => {
+const Loader = ({ size = Sizes.LARGE, color = Colors.primary }: IProps) => {
   return (
     <View style={stl.container}>
       <ActivityIndicator size={size} color={color} />

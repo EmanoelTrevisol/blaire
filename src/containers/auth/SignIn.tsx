@@ -55,7 +55,7 @@ const SignIn = () => {
         </View>
         <View style={styles.pageFooter}>
           <Text style={styles.optionText}>Ainda não possui uma conta?</Text>
-          <Button title="Criar agora mesmo" onPress={goToSignUp} />
+          <Button title="Cadastrar" onPress={goToSignUp} />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

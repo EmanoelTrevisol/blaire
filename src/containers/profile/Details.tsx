@@ -7,6 +7,7 @@ import {
   Alert,
   Button,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,6 +17,7 @@ import Favorites from './Favorites';
 import MyPosts from './MyPosts';
 
 import Auth from '@utils/firebase/Auth';
+import Colors from '@assets/colors';
 
 const initialLayout = { width: Dimensions.get('window').width };
 const Tab = createMaterialTopTabNavigator();
@@ -55,7 +57,11 @@ const Details = () => {
           <Text style={stl.instructions}>
             Veja e gerencie abaixo seus posts e favoritos (futuramente)
           </Text>
-          <Button title="Logout" onPress={confirmLogout} />
+          <Button
+            title="Logout"
+            onPress={confirmLogout}
+            color={Colors.primary}
+          />
         </View>
       </SafeAreaView>
       <NavigationContainer independent={true}>
@@ -88,8 +94,8 @@ const stl = StyleSheet.create({
     alignItems: 'center',
   },
   greetings: {
-    fontSize: 20,
-    marginBottom: 5,
+    fontSize: 18,
+    marginBottom: 2,
   },
   username: {
     fontSize: 22,
@@ -99,6 +105,11 @@ const stl = StyleSheet.create({
   instructions: {
     fontSize: 16,
     textAlign: 'center',
+    ...Platform.select({
+      android: {
+        marginBottom: 10,
+      },
+    }),
   },
   tabs: {
     flex: 1,

@@ -1,5 +1,5 @@
 import React, { useRef, useReducer, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Platform } from 'react-native';
 import { cloneDeep } from 'lodash';
 
 import { FormActionTypes, ActionTypes } from '@store/form/types';
@@ -9,6 +9,7 @@ import LoaderButton from '../LoaderButton';
 import FormErrors from '@/components/form/FormErrors';
 import { Post } from '@models/Post';
 import { treatError } from '../../errors/handler';
+import Colors from '@assets/colors';
 
 const modifiedInitialFormState = {
   ...initialFormState,
@@ -186,7 +187,7 @@ const PostForm = (props: IAuthFormProps) => {
             keyboardType="email-address"
             textContentType="username"
             placeholder="Crie seu título"
-            placeholderTextColor="#898989"
+            placeholderTextColor={Colors.secondaryText}
             onBlur={validateTitle}
             onChangeText={(value) =>
               titleDispatcher({
@@ -199,7 +200,7 @@ const PostForm = (props: IAuthFormProps) => {
         </View>
         <View style={stl.formControl}>
           <View style={stl.label}>
-            <Text style={stl.labelText}>Post</Text>
+            <Text style={stl.labelText}>Texto</Text>
           </View>
           <TextInput
             multiline={true}
@@ -207,8 +208,8 @@ const PostForm = (props: IAuthFormProps) => {
             style={stl.input}
             value={bodyState.value}
             editable={!isSubmitting}
-            placeholder="Mal posso esperar para ler o que você tem para contar"
-            placeholderTextColor="#898989"
+            placeholder="Escreva seu post"
+            placeholderTextColor={Colors.secondaryText}
             onChangeText={(value) =>
               bodyDispatcher({
                 type: ActionTypes.SET_VALUE,
@@ -243,29 +244,35 @@ const stl = StyleSheet.create({
   },
   label: {
     marginVertical: 5,
+    ...Platform.select({
+      android: {
+        marginBottom: 0,
+      },
+    }),
   },
   labelText: {
     fontSize: 20,
   },
   input: {
     paddingVertical: 5,
-    borderBottomColor: '#000',
+    borderBottomColor: Colors.primaryDark,
     borderBottomWidth: 1,
   },
   actions: {},
   button: {
-    backgroundColor: '#ea94a5',
+    backgroundColor: Colors.success,
     padding: 16,
     borderRadius: 50,
     height: 50,
   },
   buttonText: {
+    color: Colors.white,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   labelInstructions: {
     fontSize: 12,
-    color: '#232323',
+    color: Colors.secondaryText,
   },
 });
 

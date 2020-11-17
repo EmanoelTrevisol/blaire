@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createPost as createPostAction } from '@store/posts/actions';
 import CreateEditModal from '@components/posts/CreateEditModal';
 import { treatError } from '../../errors/handler';
+import Colors from '@assets/colors';
 
 export interface IProps {
   searchText?: string;
@@ -20,7 +21,7 @@ export interface IProps {
 
 const modalProps = {
   title: 'Novo post',
-  buttonTitle: 'Criar',
+  buttonTitle: 'Postar',
   isCreate: true,
 };
 
@@ -60,7 +61,7 @@ const PostListTop = (props: IProps) => {
           value={searchText}
           onChangeText={onSearchChange}
           placeholder="Pesquise um post"
-          placeholderTextColor="#000"
+          placeholderTextColor={Colors.secondaryText}
         />
       </View>
       <View style={stl.newPost}>
@@ -112,6 +113,7 @@ const stl = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    color: Colors.primary,
   },
   searchBarInput: {
     flex: 1,
@@ -124,6 +126,7 @@ const stl = StyleSheet.create({
   },
   newPostIcon: {
     fontSize: 20,
+    color: Colors.primary,
   },
 });
 

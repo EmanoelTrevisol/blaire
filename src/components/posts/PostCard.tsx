@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { simpleShow } from '@utils/Toaster';
+import Colors from '@assets/colors';
 
 const PostCard = (props) => {
   const {
@@ -27,7 +28,7 @@ const PostCard = (props) => {
 
         {(showEditIcon && (
           <TouchableOpacity style={stl.editIconTouchable} onPress={onEditPress}>
-            <Icon style={stl.favoriteIcon} name={'pencil-alt'} />
+            <Icon style={stl.editIcon} name={'pencil-alt'} />
           </TouchableOpacity>
         )) ||
           null}
@@ -38,7 +39,11 @@ const PostCard = (props) => {
             style={stl.favoriteIconTouchable}
             onPress={onDeletePress}
           >
-            <Icon style={stl.favoriteIcon} name={'trash'} color="#dd0000" />
+            <Icon
+              style={stl.favoriteIcon}
+              name={'trash'}
+              color={Colors.danger}
+            />
           </TouchableOpacity>
         )) || (
           <TouchableOpacity
@@ -66,13 +71,13 @@ const PostCard = (props) => {
 
 const stl = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     paddingVertical: 10,
     marginHorizontal: 15,
     marginBottom: 15,
     borderRadius: 20,
     elevation: 10,
-    shadowColor: '#000',
+    shadowColor: Colors.black,
     shadowRadius: 3,
     shadowOpacity: 0.2,
     shadowOffset: {
@@ -82,7 +87,7 @@ const stl = StyleSheet.create({
   },
   header: {
     padding: 15,
-    borderBottomColor: '#DADADA',
+    borderBottomColor: Colors.dividerColor,
     borderBottomWidth: 1,
     flex: 1,
     flexDirection: 'row',
@@ -99,7 +104,7 @@ const stl = StyleSheet.create({
   },
   headetTitleSubText: {
     fontSize: 12,
-    color: '#444',
+    color: Colors.secondaryText,
   },
   headarSub: {
     maxWidth: '35%',
@@ -126,8 +131,12 @@ const stl = StyleSheet.create({
     right: 40,
     padding: 5,
   },
+  editIcon: {
+    color: Colors.primaryLight,
+  },
   favoriteIcon: {
     fontSize: 14,
+    color: Colors.danger,
   },
   body: {
     padding: 15,

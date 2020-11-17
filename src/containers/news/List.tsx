@@ -15,6 +15,7 @@ import News from '../../models/News';
 import NewsCard from '../../components/news/NewsCard';
 import { getLatestNews } from '../../store/news/actions';
 import Loader from '../../components/Loader';
+import Colors from '@assets/colors';
 
 export interface IProps {
   list: News[];
@@ -75,7 +76,7 @@ const List = (props: IProps) => {
             <RefreshControl
               refreshing={isRefreshing}
               onRefresh={() => loadLatestNews(true)}
-              tintColor="#000"
+              tintColor={Colors.primary}
             />
           }
           ListHeaderComponent={ListHeaderComponent}

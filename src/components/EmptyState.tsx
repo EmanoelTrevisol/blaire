@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Colors from '@assets/colors';
 
 export interface IProps {
   title?: string;
@@ -30,6 +31,7 @@ const stl = StyleSheet.create({
   icon: {
     fontSize: 40,
     marginBottom: 10,
+    color: Colors.primary,
   },
   title: {
     fontSize: 24,

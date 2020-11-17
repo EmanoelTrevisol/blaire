@@ -16,6 +16,7 @@ import FormErrors from '../form/FormErrors';
 
 import { isValid } from '@validations/email';
 import { matchesPattern } from '@validations/string';
+import Colors from '@assets/colors';
 
 const usernameErrorMessages = {
   required: 'Por favor, informe seu nome',
@@ -273,7 +274,7 @@ const stl = StyleSheet.create({
   },
   actions: {},
   button: {
-    backgroundColor: '#ea94a5',
+    backgroundColor: Colors.primaryLight,
     padding: 16,
     borderRadius: 50,
     height: 50,

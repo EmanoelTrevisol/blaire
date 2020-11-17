@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Colors from '@assets/colors';
 
 const Favorites = () => {
   return (
@@ -27,19 +28,21 @@ const stl = StyleSheet.create({
   },
   icon: {
     fontSize: 40,
-    marginBottom: 20,
+    marginBottom: 15,
+    color: Colors.primaryLight,
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   subtitle: {
     fontSize: 16,
     textAlign: 'center',
-    marginBottom: 70,
+    marginBottom: 50,
   },
   smileyFace: {
     fontSize: 40,
+    color: Colors.success,
   },
 });
 
