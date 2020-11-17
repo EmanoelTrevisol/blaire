@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -17,8 +17,13 @@ import FormErrors from '../form/FormErrors';
 import { isValid } from '@validations/email';
 import { matchesPattern } from '@validations/string';
 
+const usernameErrorMessages = {
+  required: 'Por favor, informe seu nome',
+  valid: 'Ops... continue digitando. Estamos quase lá',
+};
+
 const emailErrorMessages = {
-  required: 'Por favor, informe um email',
+  required: 'Por favor, informe seu email',
   valid: 'Ops... esse email não parece ser válido',
 };
 
@@ -83,11 +88,23 @@ const LoginForm = (props: IAuthFormProps) => {
   const [emailState, emailDispatcher] = useReducer(formReducer, {
     ...initialFormState,
   });
+  const [usernameState, usernameDispatcher] = useReducer(formReducer, {
+    ...initialFormState,
+  });
   const [passwordState, passwordDispatcher] = useReducer(formReducer, {
     ...initialFormState,
   });
 
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const submit = async () => {
+    validateUsername();
     validateEmail();
     validatePassword();
     if (emailState.error || passwordState.error) {
@@ -97,14 +114,25 @@ const LoginForm = (props: IAuthFormProps) => {
     try {
       setIsSubmitting(true);
       await props.onSubmit({
+        username: usernameState.value,
         email: emailState.value,
         password: passwordState.value,
       });
     } catch (error) {
       console.log('Error', error);
     } finally {
-      setIsSubmitting(false);
+      if (isMounted.current) {
+        setIsSubmitting(false);
+      }
     }
+  };
+
+  const validateUsername = () => {
+    validateField({
+      dispatcher: usernameDispatcher,
+      value: usernameState.value,
+      validateFn: (username: string) => username.length > 3,
+    });
   };
 
   const validateEmail = () => {
@@ -132,6 +160,32 @@ const LoginForm = (props: IAuthFormProps) => {
   return (
     <>
       <View style={stl.form}>
+        {(props.isCreating && (
+          <View style={stl.formControl}>
+            <View style={stl.label}>
+              <Text style={stl.labelText}>Nome</Text>
+            </View>
+            <TextInput
+              autoCapitalize="none"
+              style={stl.input}
+              value={usernameState.value}
+              editable={!isSubmitting}
+              keyboardType="default"
+              textContentType="name"
+              placeholder="Digite seu nome"
+              placeholderTextColor="#898989"
+              onBlur={validateUsername}
+              onChangeText={(value) =>
+                usernameDispatcher({
+                  type: ActionTypes.SET_VALUE,
+                  payload: { value },
+                })
+              }
+            />
+            <FormErrors messages={usernameErrorMessages} {...usernameState} />
+          </View>
+        )) ||
+          null}
         <View style={stl.formControl}>
           <View style={stl.label}>
             <Text style={stl.labelText}>Email</Text>

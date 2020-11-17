@@ -7,6 +7,10 @@ import {
   Button,
   KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
 
 import AuthForm from '@components/auth/AuthForm';
@@ -17,42 +21,55 @@ const SignIn = () => {
   const navigation = useNavigation();
 
   const signUp = async ({
+    username,
     email,
     password,
   }: {
+    username: string;
     email: string;
     password: string;
   }) => {
     try {
-      const usr = await Auth.signUp(email, password);
-      onSignUp(usr.user.displayName || usr.user.email!);
+      const user = await Auth.signUp({ username, email, password });
+
+      onSignUp(user?.displayName!);
     } catch (error) {
       console.log('Error signing up', error);
     }
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <View style={styles.pageTitle}>
-        <Text style={styles.pageTitleText}>Crie sua conta</Text>
-      </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <SafeAreaView>
+          <ScrollView>
+            <View style={styles.pageTitle}>
+              <Text style={styles.pageTitleText}>Crie sua conta</Text>
+            </View>
 
-      <View style={styles.pageContent}>
-        <AuthForm isCreating onSubmit={signUp} buttonTitle="Criar conta" />
-      </View>
-      <View style={styles.pageFooter}>
-        <Text style={styles.optionText}>Já possui uma conta?</Text>
-        <Button
-          title="Fazer login"
-          onPress={() => {
-            navigation.navigate('SignIn');
-          }}
-        />
-      </View>
-    </KeyboardAvoidingView>
+            <View style={styles.pageContent}>
+              <AuthForm
+                isCreating
+                onSubmit={signUp}
+                buttonTitle="Criar conta"
+              />
+            </View>
+            <View style={styles.pageFooter}>
+              <Text style={styles.optionText}>Já possui uma conta?</Text>
+              <Button
+                title="Fazer login"
+                onPress={() => {
+                  navigation.navigate('SignIn');
+                }}
+              />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
